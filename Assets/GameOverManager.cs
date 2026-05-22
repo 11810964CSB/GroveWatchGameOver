@@ -6,7 +6,11 @@ using TMPro;
 public class GameOverManager : MonoBehaviour
 {
     [Header("Endings")]
-    [SerializeField] private EndingData[] endings;
+    [SerializeField] private EndingData endingA;
+    [SerializeField] private EndingData endingB;
+    [SerializeField] private EndingData endingC;
+    [SerializeField] private EndingData endingD;
+    [SerializeField] private EndingData endingTest;
 
     [Header("UI References")]
     [SerializeField] private Image displayImage;
@@ -28,7 +32,7 @@ public class GameOverManager : MonoBehaviour
     [SerializeField] private float endFadeDuration = 1.2f;
     [SerializeField] private float endHoldDelay = 0.4f;
 
-    public static int EndingIndex = -1;
+    public static int EndingIndex = -1; //GameOverManager.EndingIndex = 0-3 & load this scene
 
     private EndingData currentEnding;
     private int currentLine;
@@ -41,12 +45,24 @@ public class GameOverManager : MonoBehaviour
     void Start()
     {
         int idx = EndingIndex >= 0 ? EndingIndex : testEndingIndex;
-        idx = Mathf.Clamp(idx, 0, endings.Length - 1);
-        currentEnding = endings[idx];
+        EndingIndex = -1;
+
+        currentEnding = SelectEnding(idx);
         currentLine = 0;
         ShowLine(isFirstLine: true);
     }
 
+    EndingData SelectEnding(int idx)
+    {
+        switch (idx)
+        {
+            case 0: return endingA;
+            case 1: return endingB;
+            case 2: return endingC;
+            case 3: return endingD;
+            default: return endingTest;
+        }
+    }
     void Update()
     {
         if (isTransitioning) return; //ignore input mid-fade
