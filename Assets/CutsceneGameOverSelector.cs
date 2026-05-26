@@ -3,6 +3,7 @@
 //[DefaultExecutionOrder(-100)] //you're a wizard harry
 
 //// THIS DOESNT WORK YET, TBD ONCE I AM ALLOWED TO PUSH TO MAIN
+//// TURN INTO GENERAL USE CUTSCENE SELECTOR FOR OTHER CUTSCENES LATER (rename CutsceneSelector.cs)
 //public class GameOverCutsceneSelector : MonoBehaviour
 //{
 //    [Header("Cutscene per IncidentType (match with GameManager.cs)")]
@@ -17,6 +18,8 @@
 //    [SerializeField] private CutsceneData fallbackEnding;
 
 //    ServiceHub _sH;
+
+//    //_sH.gM. to access GameManager
 
 //    void Awake()
 //    {
