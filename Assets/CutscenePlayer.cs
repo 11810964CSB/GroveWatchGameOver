@@ -1,17 +1,12 @@
+// CutscenePlayer.cs
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
-public class GameOverManager : MonoBehaviour
+public class CutscenePlayer : MonoBehaviour
 {
-    [Header("Endings")]
-    [SerializeField] private EndingData endingA;
-    [SerializeField] private EndingData endingB;
-    [SerializeField] private EndingData endingC;
-    [SerializeField] private EndingData endingD;
-    [SerializeField] private EndingData endingTest;
-
     [Header("UI References")]
     [SerializeField] private Image displayImage;
     [SerializeField] private TextMeshProUGUI dialogueText;
@@ -24,17 +19,15 @@ public class GameOverManager : MonoBehaviour
     [SerializeField] private float fadeOutDuration = 0.35f;
     [SerializeField] private float fadeInDuration = 0.35f;
 
-    [Header("Testing")]
-    [SerializeField] private int testEndingIndex = 0;
-
     [Header("End Fade")]
     [SerializeField] private CanvasGroup fadeGroup;
     [SerializeField] private float endFadeDuration = 1.2f;
     [SerializeField] private float endHoldDelay = 0.4f;
 
-    public static int EndingIndex = -1; //GameOverManager.EndingIndex = 0-3 & load this scene
+    [Header("Testing")]
+    [SerializeField] private CutsceneData testCutscene;
 
-    private EndingData currentEnding;
+    private CutsceneData currentCutscene;
     private int currentLine;
     private Coroutine typingRoutine;
     private Coroutine lineRoutine;
@@ -44,28 +37,19 @@ public class GameOverManager : MonoBehaviour
 
     void Start()
     {
-        int idx = EndingIndex >= 0 ? EndingIndex : testEndingIndex;
-        EndingIndex = -1;
+        //editor testing, pls empty testCutscene on real builds
+        currentCutscene = CutsceneState.SelectedCutscene != null
+            ? CutsceneState.SelectedCutscene
+            : testCutscene;
+        CutsceneState.Clear(); //clear so next playthrough needs a fresh assignment
 
-        currentEnding = SelectEnding(idx);
         currentLine = 0;
         ShowLine(isFirstLine: true);
     }
 
-    EndingData SelectEnding(int idx)
-    {
-        switch (idx)
-        {
-            case 0: return endingA;
-            case 1: return endingB;
-            case 2: return endingC;
-            case 3: return endingD;
-            default: return endingTest;
-        }
-    }
     void Update()
     {
-        if (isTransitioning) return; //ignore input mid-fade
+        if (isTransitioning) return;
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
             OnAdvanceInput();
@@ -73,10 +57,10 @@ public class GameOverManager : MonoBehaviour
 
     void ShowLine(bool isFirstLine = false)
     {
-        var line = currentEnding.lines[currentLine];
+        var line = currentCutscene.lines[currentLine];
         currentFullText = line.text;
 
-        dialogueText.text = ""; //clear text here
+        dialogueText.text = "";
         if (continueIndicator) continueIndicator.SetActive(false);
 
         bool spriteChanged = isFirstLine || (line.image != null && displayImage.sprite != line.image);
@@ -104,6 +88,7 @@ public class GameOverManager : MonoBehaviour
         {
             displayImage.sprite = newSprite;
         }
+
         if (typingRoutine != null) StopCoroutine(typingRoutine);
         typingRoutine = StartCoroutine(TypewriterRoutine());
     }
@@ -175,13 +160,13 @@ public class GameOverManager : MonoBehaviour
     void Advance()
     {
         currentLine++;
-        if (currentLine >= currentEnding.lines.Length)
-            OnEndingComplete();
+        if (currentLine >= currentCutscene.lines.Length)
+            OnCutsceneComplete();
         else
             ShowLine();
     }
 
-    void OnEndingComplete()
+    void OnCutsceneComplete()
     {
         if (continueIndicator) continueIndicator.SetActive(false);
         StartCoroutine(EndFadeRoutine());
@@ -207,7 +192,23 @@ public class GameOverManager : MonoBehaviour
             fadeGroup.alpha = 0f;
         }
 
-        Debug.Log("ending finished");
-        //expand here for scene changes
+        HandleCompletion();
+    }
+
+    void HandleCompletion()
+    {
+        switch (currentCutscene.onComplete)
+        {
+            case CutsceneCompletionAction.LoadScene:
+                if (!string.IsNullOrEmpty(currentCutscene.nextSceneName))
+                    SceneManager.LoadScene(currentCutscene.nextSceneName);
+                else
+                    Debug.Log("your phone linging (nextSceneName empty)");
+                break;
+
+            case CutsceneCompletionAction.DoNothing:
+                Debug.Log("cutscene finished");
+                break;
+        }
     }
 }

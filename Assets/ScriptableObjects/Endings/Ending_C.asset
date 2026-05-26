@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c3a7bbaa64130c4781c9d04ef9e1b1e, type: 3}
   m_Name: Ending_C
   m_EditorClassIdentifier: 
-  endingName: Ending 3
+  cutsceneName: Ending C
   lines:
   - image: {fileID: 21300000, guid: 93200a5ec75906c4998456fede0bb60d, type: 3}
     text: 'Severe and prolonged dehydration causes the forest to wither entirely. '
@@ -21,3 +21,5 @@ MonoBehaviour:
       support life, eventually driving away all living creatures.
 
 '
+  onComplete: 0
+  nextSceneName: 

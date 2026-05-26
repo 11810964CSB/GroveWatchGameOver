@@ -497,7 +497,7 @@ GameObject:
   - component: {fileID: 946876427}
   - component: {fileID: 946876428}
   m_Layer: 0
-  m_Name: GameOverManager
+  m_Name: CutsceneManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -530,21 +530,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66976e6a3c7e51a4daecf0bae08a0a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endingA: {fileID: 11400000, guid: ad4c93c79de600b4d90be1e05c93ca6d, type: 2}
-  endingB: {fileID: 11400000, guid: 500e27def583d004a9ca68d09203a159, type: 2}
-  endingC: {fileID: 11400000, guid: ee82dc48cd213474a8e8d05cc8169a85, type: 2}
-  endingD: {fileID: 11400000, guid: 3b4ba9a6cb56b4e4b95acf3029e62782, type: 2}
-  endingTest: {fileID: 11400000, guid: 3921edeb58769a74bb461c3b319e3478, type: 2}
   displayImage: {fileID: 1178734272}
   dialogueText: {fileID: 1504327687}
   continueIndicator: {fileID: 542511008}
   charactersPerSecond: 40
   fadeOutDuration: 0.35
   fadeInDuration: 0.35
-  testEndingIndex: 0
   fadeGroup: {fileID: 1198768898}
   endFadeDuration: 1.2
   endHoldDelay: 0.4
+  testCutscene: {fileID: 11400000, guid: 3921edeb58769a74bb461c3b319e3478, type: 2}
 --- !u!1 &1178734270
 GameObject:
   m_ObjectHideFlags: 0
