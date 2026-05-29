@@ -539,7 +539,7 @@ MonoBehaviour:
   fadeGroup: {fileID: 1198768898}
   endFadeDuration: 1.2
   endHoldDelay: 0.4
-  testCutscene: {fileID: 11400000, guid: 3921edeb58769a74bb461c3b319e3478, type: 2}
+  testCutscene: {fileID: 11400000, guid: 95c81bb4a223082459004a75cc7c23ac, type: 2}
 --- !u!1 &1178734270
 GameObject:
   m_ObjectHideFlags: 0

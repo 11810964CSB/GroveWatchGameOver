@@ -202,7 +202,7 @@ public class CutscenePlayer : MonoBehaviour
                 if (!string.IsNullOrEmpty(currentCutscene.nextSceneName))
                     SceneManager.LoadScene(currentCutscene.nextSceneName);
                 else
-                    Debug.Log("your phone linging (nextSceneName empty)");
+                    Debug.Log("you can't park here sir (nextSceneName empty)");
                 break;
 
             case CutsceneCompletionAction.DoNothing:

@@ -15,8 +15,8 @@ MonoBehaviour:
   cutsceneName: Cutscene Test
   lines:
   - image: {fileID: 0}
-    text: "\"what are we, some kinda GroveWatch\u2122?\""
-  - image: {fileID: 0}
     text: Welcome to GroveWatch!
+  - image: {fileID: 0}
+    text: "\"what are we, some kinda GroveWatch\u2122?\""
   onComplete: 0
   nextSceneName: SampleScene
